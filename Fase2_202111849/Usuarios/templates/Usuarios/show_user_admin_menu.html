@@ -8,6 +8,11 @@
             {% csrf_token %}
             <button type="submit">CargarXML</button>
         </form>
+        <form method="POST" action="{% url 'agregar_usuario' %}">
+            {% csrf_token %}
+            <button type="submit">Agregar Usuarios</button>
+        </form>
+        
 
         <h1> Lista de usuarios </h1>
         <table>

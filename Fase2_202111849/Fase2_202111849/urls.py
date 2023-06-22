@@ -20,10 +20,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from Usuarios.views import mostrar_user
 from Usuarios.views import cargar_xml
+from Usuarios.views import agregar_usuario
 
 urlpatterns = [
     path('', include('index.urls')),
     path('admin/', admin.site.urls),
     path('Usuarios/', mostrar_user, name='mostrar_user'),
     path('Usuarios/cargar_xml', cargar_xml, name='cargar_xml'),
+    path('Usuarios/agregar_usuario', agregar_usuario, name='agregar_usuario'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

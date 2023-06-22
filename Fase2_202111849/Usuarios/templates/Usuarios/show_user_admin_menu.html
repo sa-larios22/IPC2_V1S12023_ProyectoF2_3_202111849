@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Gestion de usuarios</title> 
+    </head>
+    <body>
+        <form method="POST" action="{% url 'cargar_xml' %}">
+            {% csrf_token %}
+            <button type="submit">CargarXML</button>
+        </form>
+
+        <h1> Lista de usuarios </h1>
+        <table>
+            <thead>
+                <th>Rol</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Telefono</th>
+                <th>Correo</th>
+                <th>Contraseña</th>
+            </thead>
+            <tbody>
+                {% for usuario in Usuarios %}
+                <tr>
+                    <td> {{usuario.rol}} </td>
+                    <td> {{usuario.nombre}} </td>
+                    <td> {{usuario.apellido}} </td>
+                    <td> {{usuario.telefono}} </td>
+                    <td> {{usuario.correo}} </td>
+                    <td> {{usuario.contrasena}} </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td> No existen registros </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </body>
+</html>

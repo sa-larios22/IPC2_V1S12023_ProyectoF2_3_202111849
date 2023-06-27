@@ -1,35 +1,7 @@
-I have these files for a linked list that manages users in a cinema's website
-- usuarios.py, class that stores every user information
-from colorama import Fore as fo
-
-class Usuario:
-    def __init__(self, rol, nombre, apellido, telefono, correo, contrasena):
-        self.rol = rol
-        self.nombre = nombre
-        self.apellido = apellido
-        self.telefono = telefono
-        self.correo = correo
-        self.contrasena = contrasena
-
-    def imprimir(self):
-        print(fo.CYAN + "Rol: " + fo.WHITE + self.rol +
-              fo.CYAN + ", Nombre: " + fo.WHITE + self.nombre,
-              fo.CYAN + ", Apellido: " + fo.WHITE + self.apellido +
-              fo.CYAN + ", Teléfono: " + fo.WHITE + self.telefono +
-              fo.CYAN + ", Correo: " + fo.WHITE + self.correo +
-              fo.CYAN + ", Contraseña: " + fo.WHITE + self.contrasena
-              + fo.RESET)
-
-- nodo.py, the class that handles nodes for the linked list
-class Nodo:
-    def __init__(self, dato):
-        self.dato = dato
-        self.siguiente = None
-
-- listaEnlazada.py, the class that handles every procedure for the linked list and editing the XML file
-from Listas.enlazada.nodo import Nodo
-from clases.usuarios import Usuario
+from .nodo import Nodo
+from .usuarios import Usuario
 import xml.etree.ElementTree as ET
+import os
 
 class ListaEnlazada:
     def __init__(self):
@@ -95,8 +67,14 @@ class ListaEnlazada:
             actual.dato.imprimir()
 
     def CargarXML(self, operacion):
-        
-        tree = ET.parse('Archivos de Entrada\\usuarios.xml')
+        # Get the directory that this script is in
+        script_dir = os.path.dirname(__file__)
+
+        # Build the path to the XML file by joining the script's directory with the filename
+        xml_file_path = os.path.join(script_dir, 'usuarios.xml')
+
+        # Use the path to parse the XML file
+        tree = ET.parse(xml_file_path)
         root = tree.getroot()
 
         for indice, users in enumerate(root.findall('usuario')):
@@ -117,7 +95,14 @@ class ListaEnlazada:
                 self.delete(objeto)
 
     def editarXML(self, new_rol, new_nombre, new_apellido, new_telefono, tmp_correo, new_contrasena):
-        tree = ET.parse('Archivos de Entrada\\usuarios.xml')
+        # Get the directory that this script is in
+        script_dir = os.path.dirname(__file__)
+
+        # Build the path to the XML file by joining the script's directory with the filename
+        xml_file_path = os.path.join(script_dir, 'usuarios.xml')
+
+        # Use the path to parse the XML file
+        tree = ET.parse(xml_file_path)
         root = tree.getroot()
 
         for user in root.findall('usuario'):
@@ -134,12 +119,19 @@ class ListaEnlazada:
                 contrasena.text = new_contrasena
                 break
 
-        tree.write('Archivos de Entrada\\usuarios.xml')
+        tree.write(xml_file_path)
 
         self.CargarXML(2)
 
     def eliminarXML(self, tmp_correo):
-        tree = ET.parse('Archivos de Entrada\\usuarios.xml')
+        # Get the directory that this script is in
+        script_dir = os.path.dirname(__file__)
+
+        # Build the path to the XML file by joining the script's directory with the filename
+        xml_file_path = os.path.join(script_dir, 'usuarios.xml')
+
+        # Use the path to parse the XML file
+        tree = ET.parse(xml_file_path)
         root = tree.getroot()
 
         for user in root.findall('usuario'):
@@ -147,61 +139,6 @@ class ListaEnlazada:
                 root.remove(user)
                 break
 
-        tree.write('Archivos de Entrada\\usuarios.xml')
+        tree.write(xml_file_path)
 
         self.CargarXML(3)
-
-- usuarios.xml, the XML from where the information comes from
-<usuarios>
-  <usuario>
-    <rol>cliente</rol>
-    <nombre>John</nombre>
-    <apellido>Doe</apellido>
-    <telefono>123456789</telefono>
-    <correo>john.doe@example.com</correo>
-    <contrasena>mipassword123</contrasena>
-  </usuario>
-  <usuario>
-    <rol>administrador</rol>
-    <nombre>Jane</nombre>
-    <apellido>Smith</apellido>
-    <telefono>987654321</telefono>
-    <correo>jane.smith@example.com</correo>
-    <contrasena>password456</contrasena>
-  </usuario>
-  <usuario>
-    <rol>cliente</rol>
-    <nombre>klsda</nombre>
-    <apellido>dsfoij</apellido>
-    <telefono>902398</telefono>
-    <correo>ljkasdlk</correo>
-    <contrasena>ljfdsl</contrasena>
-  </usuario>
-  <usuario>
-    <rol>administrador</rol>
-    <nombre>ojiads</nombre>
-    <apellido>fdsggfdfdg</apellido>
-    <telefono>adssaads</telefono>
-    <correo>luciomain@gmail.com</correo>
-    <contrasena>fdsfdsfds</contrasena>
-  </usuario>
-  <usuario>
-    <rol>cliente</rol>
-    <nombre>Juancho</nombre>
-    <apellido>Perez</apellido>
-    <telefono>12345678</telefono>
-    <correo>2</correo>
-    <contrasena>2</contrasena>
-  </usuario>
-</usuarios>
-
-With this information, show me every single step and necessary file for creating a Django application that allows me to do CRUD for the linked list in a single page.
-Remember that every user has this data and is all stored in an object trough the class Usuarios.
-Don't use databases or migrations at all, this is supposed to be a simple application.
-Don't use a forms.py file for storing data as it will be modified in the XML file.
-Display the user list in a table that shows every data from the user; add another column to that table to add buttons for the modify and delete methods, similar to this:
-<td>
-    <a>Editar</a>
-    <a>Eliminar</a>
-</td>
-Make sure to edit the <a></a> attribute so it accomplishes their functions

@@ -22,7 +22,7 @@ def crud_usuarios(request):
             lista_usuarios.agregarXML(rol, nombre, apellido, telefono, correo, contrasena)
         elif action == 'modify':
             index = request.POST.get('index')
-            lista_usuarios.modify
+            lista_usuarios.modify(objeto, index)
             lista_usuarios.editarXML(rol, nombre, apellido, telefono, correo, contrasena)
         elif action == 'delete':
             lista_usuarios.delete(objeto)

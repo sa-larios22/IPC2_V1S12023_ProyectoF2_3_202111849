@@ -137,13 +137,15 @@ class ListaEnlazada:
                 apellido.text = new_apellido
                 telefono = user.find('telefono')
                 telefono.text = new_telefono
+                correo = user.find('correo')
+                correo.text = tmp_correo
                 contrasena = user.find('contrasena')
                 contrasena.text = new_contrasena
                 break
 
         tree.write(xml_file_path)
-
-        self.CargarXML(2)
+        
+        self.eliminarXML(tmp_correo)
 
     def eliminarXML(self, tmp_correo):
         # Get the directory that this script is in

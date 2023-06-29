@@ -22,7 +22,7 @@
             <table class="table">
                 <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Index</th>
+                        <th scope="col">#</th>
                         <th scope="col">Categoría</th>
                         <th scope="col">Título</th>
                         <th scope="col">Director</th>
@@ -47,10 +47,10 @@
                         <td class="imagen">{{movie.imagen}}</td>
                         <td class="precio">{{movie.precio}}</td>
                         <td>
-                            <button type="button" class="edit-button" data-correo="{{movie.titulo}}">Editar</button>
+                            <button type="button" class="edit-button" data-movie="{{movie.titulo}}">Editar</button>
                             <form method="post">
                                 {% csrf_token %}
-                                <input type="hidden" name="correo" value="{{ movie.titulo }}">
+                                <input type="hidden" name="titulo" value="{{ movie.titulo }}">
                                 <input type="hidden" name="action" value="delete">
                                 <input type="submit" value="Eliminar">
                             </form>
@@ -77,29 +77,45 @@
         </div>
 
         <script>
-            $(document).ready(function(){
-                $("body").on("click", ".edit-button", function(){
-                   var titulo = $(this).data("titulo"); 
-                   var row = $("#" + titulo);
+            window.addEventListener('DOMContentLoaded', (event) => {
+                let editButtons = document.querySelectorAll(".edit-button");
+                for (let i = 0; i < editButtons.length; i++) {
+                    editButtons[i].addEventListener("click", function() {
+                        let row = this.closest('tr'); // Get the closest tr parent element
+                        document.querySelector("#form-categoria").value = row.querySelector(".categoria").textContent;
+                        document.querySelector("#form-titulo").value = row.querySelector(".titulo").textContent;
+                        document.querySelector("#form-director").value = row.querySelector(".director").textContent;
+                        document.querySelector("#form-anio").value = row.querySelector(".anio").textContent;
+                        document.querySelector("#form-fecha").value = row.querySelector(".fecha").textContent;
+                        document.querySelector("#form-hora").value = row.querySelector(".hora").textContent;
+                        document.querySelector("#form-imagen").value = row.querySelector(".imagen").textContent;
+                        document.querySelector("#form-precio").value = row.querySelector(".precio").textContent;
 
-                    $("#form-categoria").val(row.find(".categoria").text());
-                    $("#form-titulo").val(row.find(".titulo").text());
-                    $("#form-director").val(row.find(".director").text());
-                    $("#form-anio").val(row.find(".anio").text());
-                    $("#form-fecha").val(row.find(".fecha").text());
-                    $("#form-hora").val(row.find(".hora").text());
-                    $("#form-imagen").val(row.find(".imagen").text());
-                    $("#form-precio").val(row.find(".precio").text());
-                    $("#form-submit").val("Guardar Cambios");
-                });
+                        // Modify the action and submit button
+                        let actionInput = document.querySelector("#movie-form input[name=action]");
+                        let submitButton = document.querySelector("#form-submit");
+                        actionInput.value = "modify";
+                        submitButton.value = "Guardar Cambios";
+                    });
+                }
 
-                $("#movie-form").submit(function(){
-                    if ($("#form-submit").val() === "Guardar Cambios") {
-                        $(this).append('<input type="hidden" name="action" value="modify">');
-                    }
+                // Here's the new event listener
+                let form = document.querySelector("#movie-form");
+                form.addEventListener("submit", function(event) {
+                    // Prevent the default form submission action
+                    event.preventDefault();
+
+                    // Reset the action and submit button
+                    let actionInput = document.querySelector("#movie-form input[name=action]");
+                    let submitButton = document.querySelector("#form-submit");
+                    actionInput.value = "add";
+                    submitButton.value = "Añadir Película";
+
+                    // Perform form submission manually
+                    form.submit();
                 });
             });
-        </script>
-
+            </script>
+            
     </body>
 </html>

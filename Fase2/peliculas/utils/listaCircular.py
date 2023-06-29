@@ -183,31 +183,37 @@ class listaDobleCircular:
             print(e)
         
 
-    def editarXML_LDC(self, tmp_titulo, new_fecha, new_hora, new_precio):
+    def editarXML_LDC(self, pelicula):
         script_dir = os.path.dirname(__file__)
-
-        # Build the path to the XML file by joining the script's directory with the filename
         xml_file_path = os.path.join(script_dir, 'peliculas.xml')
-
-        # Use the path to parse the XML file
         tree = ET.parse(xml_file_path)
         root = tree.getroot()
 
+        old_movie_element = None
+        old_categoria_element = None
+
+        # Search for the old movie and its category
         for category in root.findall('categoria'):
             for movie in category.find('peliculas').findall('pelicula'):
-                if movie.find('titulo').text == tmp_titulo:
-                    fecha = movie.find('fecha')
-                    fecha.text = new_fecha
-                    hora = movie.find('hora')
-                    hora.text = new_hora
-                    precio = movie.find('precio')
-                    precio.text = new_precio
+                if movie.find('titulo').text == pelicula.titulo:
+                    old_movie_element = movie
+                    old_categoria_element = category
                     break
+            if old_movie_element is not None:
+                break
         
-        tree.write(xml_file_path)
+        # If the old movie wasn't found, just return
+        if old_movie_element is None:
+            print("Movie not found")
+            return
+
+        # Use the "eliminarXML_LDC" method to remove the old movie
+        self.eliminarXML_LDC(pelicula.titulo)
+
+        # Now, call the "agregarXML_LDC" method to add the updated movie in its new category
+        self.agregarXML_LDC(pelicula.categoria, pelicula.titulo, pelicula.director, pelicula.anio, pelicula.fecha, pelicula.hora, pelicula.imagen, pelicula.precio)
 
         self.cabeza = None  # Clear the list
-        self.CargarXML_LDC(1)
 
     def eliminarXML_LDC(self, tmp_titulo):
         script_dir = os.path.dirname(__file__)

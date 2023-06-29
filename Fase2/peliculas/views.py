@@ -26,7 +26,7 @@ def crud_peliculas(request):
         elif action == 'modify':
             index = request.POST.get('index')
             lista_peliculas.modify(objeto, index)
-            lista_peliculas.editarXML_LDC(titulo, fecha, hora, precio)
+            lista_peliculas.editarXML_LDC(objeto)
         elif action == 'delete':
             lista_peliculas.delete(objeto)
             lista_peliculas.eliminarXML_LDC(titulo)

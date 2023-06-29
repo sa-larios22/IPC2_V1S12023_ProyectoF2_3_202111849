@@ -15,7 +15,91 @@
                     </a>
                 </div>
             </div>
-            <div class="b-example-divider"></div>
         </header>
+        <div class="b-example-divider"></div>
+        <div class="px-4 py-5 my-5 text-center">
+            <h2>Películas</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Index</th>
+                        <th scope="col">Categoría</th>
+                        <th scope="col">Título</th>
+                        <th scope="col">Director</th>
+                        <th scope="col">Año</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Hora</th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index, movie in movies %}
+                    <tr id="{{movie.titulo}}">
+                        <td>{{index}}</td>
+                        <td class="categoria">{{movie.categoria}}</td>
+                        <td class="titulo">{{movie.titulo}}</td>
+                        <td class="director">{{movie.director}}</td>
+                        <td class="anio">{{movie.anio}}</td>
+                        <td class="fecha">{{movie.fecha}}</td>
+                        <td class="hora">{{movie.hora}}</td>
+                        <td class="imagen">{{movie.imagen}}</td>
+                        <td class="precio">{{movie.precio}}</td>
+                        <td>
+                            <button type="button" class="edit-button" data-correo="{{movie.titulo}}">Editar</button>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="correo" value="{{ movie.titulo }}">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="submit" value="Eliminar">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <form id="movie-form" method="post">
+                {% csrf_token %}
+                <div>Categoría  <input id="form-categoria" type="text" name="categoria"></div>
+                <div>Título     <input id="form-titulo" type="text" name="titulo"></div>
+                <div>Director   <input id="form-director" type="text" name="director"></div>
+                <div>Año        <input id="form-anio" type="text" name="anio"></div>
+                <div>Fecha      <input id="form-fecha" type="text" name="fecha"></div>
+                <div>Hora       <input id="form-hora" type="text" name="hora"></div>
+                <div>Imagen     <input id="form-imagen" type="text" name="imagen"></div>
+                <div>Precio     <input id="form-precio" type="text" name="precio"></div>
+                <div>
+                    <input type="hidden" name="action" value="add">
+                    <input id="form-submit" type="submit" value="Añadir Película">
+                </div>
+            </form>
+        </div>
+
+        <script>
+            $(document).ready(function(){
+                $("body").on("click", ".edit-button", function(){
+                   var titulo = $(this).data("titulo"); 
+                   var row = $("#" + titulo);
+
+                    $("#form-categoria").val(row.find(".categoria").text());
+                    $("#form-titulo").val(row.find(".titulo").text());
+                    $("#form-director").val(row.find(".director").text());
+                    $("#form-anio").val(row.find(".anio").text());
+                    $("#form-fecha").val(row.find(".fecha").text());
+                    $("#form-hora").val(row.find(".hora").text());
+                    $("#form-imagen").val(row.find(".imagen").text());
+                    $("#form-precio").val(row.find(".precio").text());
+                    $("#form-submit").val("Guardar Cambios");
+                });
+
+                $("#movie-form").submit(function(){
+                    if ($("#form-submit").val() === "Guardar Cambios") {
+                        $(this).append('<input type="hidden" name="action" value="modify">');
+                    }
+                });
+            });
+        </script>
+
     </body>
 </html>

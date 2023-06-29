@@ -19,11 +19,13 @@ def crud_usuarios(request):
         
         if action == 'add':
             lista_usuarios.add(objeto)
-            lista_usuarios.editarXML(rol, nombre, apellido, telefono, correo, contrasena)
+            lista_usuarios.agregarXML(rol, nombre, apellido, telefono, correo, contrasena)
         elif action == 'modify':
             index = request.POST.get('index')
+            lista_usuarios.modify
             lista_usuarios.editarXML(rol, nombre, apellido, telefono, correo, contrasena)
         elif action == 'delete':
+            lista_usuarios.delete(objeto)
             lista_usuarios.eliminarXML(correo)
     
     users = []

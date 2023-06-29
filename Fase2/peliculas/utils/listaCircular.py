@@ -143,6 +143,46 @@ class listaDobleCircular:
                     self.delete(pelicula)
                 
 
+    def agregarXML_LDC(self, categoria, titulo, director, anio, fecha, hora, imagen, precio):
+        script_dir = os.path.dirname(__file__)
+        xml_file_path = os.path.join(script_dir, 'peliculas.xml')
+        tree = ET.parse(xml_file_path)
+        root = tree.getroot()
+        
+        # Check if categoria already exists
+        categoria_element = None
+        for cat in root.findall('categoria'):
+            nombre = cat.find('nombre')
+            if nombre is not None and nombre.text == categoria:
+                categoria_element = cat
+                break
+        
+        # If the categoria doesn't exist, create it    
+        if categoria_element is None:
+            categoria_element = ET.SubElement(root, 'categoria')
+            ET.SubElement(categoria_element, 'nombre').text = categoria
+            peliculas_element = ET.SubElement(categoria_element, 'peliculas')
+        else:
+            peliculas_element = categoria_element.find('peliculas')
+
+        new_movie = ET.SubElement(peliculas_element, 'pelicula')
+        
+        ET.SubElement(new_movie, 'titulo').text = titulo
+        ET.SubElement(new_movie, 'director').text = director
+        ET.SubElement(new_movie, 'anio').text = anio
+        ET.SubElement(new_movie, 'fecha').text = fecha
+        ET.SubElement(new_movie, 'hora').text = hora
+        ET.SubElement(new_movie, 'imagen').text = imagen
+        ET.SubElement(new_movie, 'precio').text = precio
+        
+        self.indent_movies(root)
+        
+        try:
+            tree.write(xml_file_path)
+        except Exception as e:
+            print(e)
+        
+
     def editarXML_LDC(self, tmp_titulo, new_fecha, new_hora, new_precio):
         script_dir = os.path.dirname(__file__)
 
@@ -186,5 +226,18 @@ class listaDobleCircular:
                     break
 
         tree.write(xml_file_path)
-
-        self.CargarXML_LDC(1)
+        
+    def indent_movies(self, elem, level=0):
+        i = "\n" + level*"  "
+        if len(elem):
+            if not elem.text or not elem.text.strip():
+                elem.text = i + "  "
+            if not elem.tail or not elem.tail.strip():
+                elem.tail = i
+            for elem in elem:
+                self.indent_movies(elem, level+1)
+            if not elem.tail or not elem.tail.strip():
+                elem.tail = i
+        else:
+            if level and (not elem.tail or not elem.tail.strip()):
+                elem.tail = i

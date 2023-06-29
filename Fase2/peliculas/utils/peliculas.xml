@@ -1,6 +1,6 @@
 <categorias>
   <categoria>
-  <nombre>Acción</nombre>
+    <nombre>Acci&#243;n</nombre>
     <peliculas>
       <pelicula>
         <titulo>Avengers: Endgame</titulo>
@@ -21,7 +21,7 @@
         <precio>45</precio>
       </pelicula>
       <pelicula>
-        <titulo>Misión Imposible: Fallout</titulo>
+        <titulo>Misi&#243;n Imposible: Fallout</titulo>
         <director>Christopher McQuarrie</director>
         <anio>2018</anio>
         <fecha>2023-06-07</fecha>
@@ -32,7 +32,7 @@
     </peliculas>
   </categoria>
   <categoria>
-  <nombre>Comedia</nombre>
+    <nombre>Comedia</nombre>
     <peliculas>
       <pelicula>
         <titulo>Deadpool</titulo>
@@ -60,6 +60,20 @@
         <hora>20:15</hora>
         <imagen>https://usaccinema.com/image3.png</imagen>
         <precio>42</precio>
+      </pelicula>
+    </peliculas>
+  </categoria>
+  <categoria>
+    <nombre>Terror</nombre>
+    <peliculas>
+      <pelicula>
+        <titulo>Monster House</titulo>
+        <director>Enrique Segoviano</director>
+        <anio>2006</anio>
+        <fecha>2023-06-25</fecha>
+        <hora>2:00</hora>
+        <imagen>si</imagen>
+        <precio>34</precio>
       </pelicula>
     </peliculas>
   </categoria>

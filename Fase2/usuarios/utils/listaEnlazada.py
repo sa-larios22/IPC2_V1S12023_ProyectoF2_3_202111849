@@ -94,6 +94,28 @@ class ListaEnlazada:
             elif operacion == 3:
                 self.delete(objeto)
 
+    def agregarXML(self, rol, nombre, apellido, telefono, correo, contrasena):
+        script_dir = os.path.dirname(__file__)
+        xml_file_path = os.path.join(script_dir, 'usuarios.xml')
+        tree = ET.parse(xml_file_path)
+        root = tree.getroot()
+        
+        new_user = ET.SubElement(root, 'usuario')
+        
+        ET.SubElement(new_user, 'rol').text = rol
+        ET.SubElement(new_user, 'nombre').text = nombre
+        ET.SubElement(new_user, 'apellido').text = apellido
+        ET.SubElement(new_user, 'telefono').text = telefono
+        ET.SubElement(new_user, 'correo').text = correo
+        ET.SubElement(new_user, 'contrasena').text = contrasena
+        
+        self.indent_usuarios(root)
+        
+        try:
+            tree.write(xml_file_path)
+        except Exception as e:
+            print(e)
+
     def editarXML(self, new_rol, new_nombre, new_apellido, new_telefono, tmp_correo, new_contrasena):
         # Get the directory that this script is in
         script_dir = os.path.dirname(__file__)
@@ -140,5 +162,18 @@ class ListaEnlazada:
                 break
 
         tree.write(xml_file_path)
-
-        self.CargarXML(3)
+        
+    def indent_usuarios(self, elem, level=0):
+        i = "\n" + level*"  "
+        if len(elem):
+            if not elem.text or not elem.text.strip():
+                elem.text = i + "  "
+            if not elem.tail or not elem.tail.strip():
+                elem.tail = i
+            for elem in elem:
+                self.indent_usuarios(elem, level+1)
+            if not elem.tail or not elem.tail.strip():
+                elem.tail = i
+        else:
+            if level and (not elem.tail or not elem.tail.strip()):
+                elem.tail = i

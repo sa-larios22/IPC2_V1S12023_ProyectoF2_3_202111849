@@ -44,7 +44,7 @@
                         <td class="correo">{{ user.correo }}</td>
                         <td class="contrasena">{{ user.contrasena }}</td>
                         <td>
-                            <button type="button" class="edit-button" data-correo="{{ user.correo }}">Editar</button>
+                            <button type="button" class="edit-button" data-correo="{{user.correo}}">Editar</button>
                             <form method="post">
                                 {% csrf_token %}
                                 <input type="hidden" name="correo" value="{{ user.correo }}">
@@ -73,7 +73,7 @@
 
         <script>
             $(document).ready(function(){
-                $(".edit-button").click(function(){
+                $("body").on("click", ".edit-button", function(){
                     var correo = $(this).data('correo');
                     var row = $("#" + correo);
                     $("#form-rol").val(row.find(".rol").text());
@@ -84,7 +84,7 @@
                     $("#form-contrasena").val(row.find(".contrasena").text());
                     $("#form-submit").val("Guardar Cambios");
                 });
-    
+            
                 $("#user-form").submit(function(){
                     if ($("#form-submit").val() === "Guardar Cambios") {
                         $(this).append('<input type="hidden" name="action" value="modify" />');
@@ -93,7 +93,6 @@
                     }
                 });
             });
-            </script>
-
+        </script>
     </body>
 </html>

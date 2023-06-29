@@ -1,8 +1,37 @@
-from Listas.circular.nodoCircular import Nodo
-from Fase2.peliculas.utils.peliculas import Pelicula
+import os
+from django.conf import settings
 from colorama import Fore as fo
+from xml.etree.ElementTree import Element, SubElement, tostring
 import xml.etree.ElementTree as ET
 
+# Create your models here.
+class Pelicula:
+    def __init__(self, categoria, titulo, director, anio, fecha, hora, imagen, precio):
+        self.categoria = categoria
+        self.titulo = titulo
+        self.director = director
+        self.anio = anio
+        self.fecha = fecha
+        self.hora = hora
+        self.imagen = imagen
+        self.precio = precio
+
+    def imprimir(self):
+        print(fo.CYAN + "Categoria: " + fo.WHITE + self.categoria +
+              fo.CYAN + " Titulo: " + fo.WHITE + self.titulo +
+              fo.CYAN + " Director: " + fo.WHITE + self.director +
+              fo.CYAN + " Año: " + fo.WHITE + self.anio +
+              fo.CYAN + " Fecha: " + fo.WHITE + self.fecha +
+              fo.CYAN + " Hora: " + fo.WHITE + self.hora +
+              fo.CYAN + " Imagen: " + fo.WHITE + self.imagen +
+              fo.CYAN + " Precio: " + fo.WHITE + self.precio)
+        
+class Nodo:
+    def __init__(self, dato):
+        self.dato = dato
+        self.siguiente = None
+        self.anterior = None
+        
 class listaDobleCircular:
     def __init__(self):
         self.cabeza = None
@@ -61,7 +90,13 @@ class listaDobleCircular:
         return None
 
     def show_categorias(self):
-        tree = ET.parse('Archivos de Entrada\\peliculas.xml')
+        script_dir = os.path.dirname(__file__)
+
+        # Build the path to the XML file by joining the script's directory with the filename
+        xml_file_path = os.path.join(script_dir, 'peliculas.xml')
+
+        # Use the path to parse the XML file
+        tree = ET.parse(xml_file_path)
         root = tree.getroot()
 
         print(fo.WHITE + """
@@ -70,7 +105,13 @@ class listaDobleCircular:
             print(fo.WHITE + "                " + f"{i+1}. {categoria.find('nombre').text}")
 
     def show_peliculas(self, categoria):
-        tree = ET.parse('Archivos de Entrada\\peliculas.xml')
+        script_dir = os.path.dirname(__file__)
+
+        # Build the path to the XML file by joining the script's directory with the filename
+        xml_file_path = os.path.join(script_dir, 'peliculas.xml')
+
+        # Use the path to parse the XML file
+        tree = ET.parse(xml_file_path)
         root = tree.getroot()
 
         categorias = list(root.findall('categoria'))
@@ -100,7 +141,13 @@ class listaDobleCircular:
                     break
 
     def CargarXML_LDC(self, operacion):
-        tree = ET.parse('Archivos de Entrada\\peliculas.xml')
+        script_dir = os.path.dirname(__file__)
+
+        # Build the path to the XML file by joining the script's directory with the filename
+        xml_file_path = os.path.join(script_dir, 'peliculas.xml')
+
+        # Use the path to parse the XML file
+        tree = ET.parse(xml_file_path)
         root = tree.getroot()
 
         for category in root.findall('categoria'):
@@ -111,8 +158,10 @@ class listaDobleCircular:
                 anio = movie.find('anio').text
                 fecha = movie.find('fecha').text
                 hora = movie.find('hora').text
+                imagen = movie.find('imagen').text
+                precio = movie.find('precio').text
 
-                pelicula = Pelicula(categoria, titulo, director, anio, fecha, hora)
+                pelicula = Pelicula(categoria, titulo, director, anio, fecha, hora, imagen, precio)
 
                 if operacion == 1:
                     self.add(pelicula)
@@ -122,8 +171,14 @@ class listaDobleCircular:
                     self.delete(pelicula)
                 
 
-    def editarXML_LDC(self, tmp_titulo, new_fecha, new_hora):
-        tree = ET.parse('Archivos de Entrada\\peliculas.xml')
+    def editarXML_LDC(self, tmp_titulo, new_fecha, new_hora, new_precio):
+        script_dir = os.path.dirname(__file__)
+
+        # Build the path to the XML file by joining the script's directory with the filename
+        xml_file_path = os.path.join(script_dir, 'peliculas.xml')
+
+        # Use the path to parse the XML file
+        tree = ET.parse(xml_file_path)
         root = tree.getroot()
 
         for category in root.findall('categoria'):
@@ -133,15 +188,23 @@ class listaDobleCircular:
                     fecha.text = new_fecha
                     hora = movie.find('hora')
                     hora.text = new_hora
+                    precio = movie.find('precio')
+                    precio.text = new_precio
                     break
         
-        tree.write('Archivos de Entrada\\peliculas.xml')
+        tree.write(xml_file_path)
 
         self.cabeza = None  # Clear the list
         self.CargarXML_LDC(1)
 
     def eliminarXML_LDC(self, tmp_titulo):
-        tree = ET.parse('Archivos de Entrada\\peliculas.xml')
+        script_dir = os.path.dirname(__file__)
+
+        # Build the path to the XML file by joining the script's directory with the filename
+        xml_file_path = os.path.join(script_dir, 'peliculas.xml')
+
+        # Use the path to parse the XML file
+        tree = ET.parse(xml_file_path)
         root = tree.getroot()
 
         for category in root.findall('categoria'):
@@ -150,6 +213,6 @@ class listaDobleCircular:
                     category.find('peliculas').remove(movie)
                     break
 
-        tree.write('Archivos de Entrada\\peliculas.xml')
+        tree.write(xml_file_path)
 
         self.CargarXML_LDC(1)

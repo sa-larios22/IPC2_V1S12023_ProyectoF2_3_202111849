@@ -15,26 +15,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-<<<<<<< HEAD:Fase2/Fase2/urls.py
 from django.urls import path, include
-=======
-from django.urls import include, path
-from django.conf import settings
-from django.conf.urls.static import static
-from Usuarios.views import mostrar_user
-from Usuarios.views import cargar_xml
-from Usuarios.views import agregar_usuario
->>>>>>> develop:Fase2_202111849/Fase2_202111849/urls.py
 
 urlpatterns = [
     path('', include('main.urls')),
     path('admin/', admin.site.urls),
-<<<<<<< HEAD:Fase2/Fase2/urls.py
     path('usuarios/', include('usuarios.urls')),
+    path('peliculas/', include('peliculas.urls')),
 ]
-=======
-    path('Usuarios/', mostrar_user, name='mostrar_user'),
-    path('Usuarios/cargar_xml', cargar_xml, name='cargar_xml'),
-    path('Usuarios/agregar_usuario', agregar_usuario, name='agregar_usuario'),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
->>>>>>> develop:Fase2_202111849/Fase2_202111849/urls.py

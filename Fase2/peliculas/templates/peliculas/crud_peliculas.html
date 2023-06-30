@@ -77,24 +77,6 @@
             </form>
         </div>
 
-        <form method="post" action="{% url 'view_movies' %}">
-            {% csrf_token %}
-            <div class="carrusel">
-                <div class="carrusel-contenedor">
-                    {% for movie in movie_list %}
-                        {% with titulo=movie.0 imagen=movie.1%}
-                            <div class="carrusel-imagen">
-                                <img src="{{imagen}}" alt="{{titulo}}">
-                                <div class="carrusel-caption">
-                                    <p>{{ titulo }}</p>
-                                </div>
-                            </div>
-                        {% endwith %}
-                    {% endfor %}
-                    <button type="submit" class="carrusel-load-button">Cargar Carrusel</button>
-                </div>
-            </div>
-        </form>
         
         <script>
             window.addEventListener('DOMContentLoaded', (event) => {

@@ -52,12 +52,3 @@ def crud_peliculas(request):
                 break
     
     return render(request, 'peliculas/crud_peliculas.html', {'movies': movies})
-
-def view_movies(request):
-    lista_peliculas = listaDobleCircular()
-    titulos = lista_peliculas.get_all_titulos()
-    imagenes = lista_peliculas.get_all_imagenes()
-    
-    movie_list = list(zip(titulos, imagenes))
-    
-    return render(request, 'peliculas/crud_peliculas.html', {'movie_list': movie_list})

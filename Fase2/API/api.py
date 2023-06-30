@@ -10,32 +10,32 @@ def getUsuarios():
             retorno = [
                 {
                     "rol": "cliente",
-                    "nombre": "John",
-                    "apellido": "Doe",
-                    "telefono": "123456789",
-                    "correo": "john.doe@example.com",
-                    "contrasena": "mipassword123"
+                    "nombre": "Sarah",
+                    "apellido": "Johnson",
+                    "telefono": "9876543210",
+                    "correo": "sarah.johnson@example.com",
+                    "contrasena": "pass1234"
                 },
                 {
                     "rol": "administrador",
-                    "nombre": "Jane",
-                    "apellido": "Smith",
-                    "telefono": "987654321",
-                    "correo": "jane.smith@example.com",
-                    "contrasena": "password456"
+                    "nombre": "Michael",
+                    "apellido": "Anderson",
+                    "telefono": "1234567890",
+                    "correo": "michael.anderson@example.com",
+                    "contrasena": "admin456"
                 },
                 {
                     "rol": "cliente",
-                    "nombre": "Chabelo",
-                    "apellido": "Perez",
-                    "telefono": "838383",
-                    "correo": "chabelo@gmail.com",
-                    "contrasena": "838938"
+                    "nombre": "Emily",
+                    "apellido": "Davis",
+                    "telefono": "5555555555",
+                    "correo": "emily.davis@example.com",
+                    "contrasena": "password123"
                 }
             ]
         else:
             retorno = {'Mensaje': 'Error, método incorrecto'}
-            return jsonify(retorno)
+        return jsonify(retorno)
     except:
         retorno = {'Mensaje': 'Error, no se pudo obtener los usuarios'}
         return jsonify(retorno)
@@ -47,38 +47,38 @@ def getPeliculas():
             retorno = [
                 {
                     "categoria": "Acción",
-                    "titulo": "Avengers: Endgame",
-                    "director": "Joe Russo, Anthony Russo",
-                    "anio": "2019",
+                    "titulo": "Avengers: Age of Ultron",
+                    "director": "Joss Whedon",
+                    "anio": "2015",
                     "fecha": "2023-06-05",
                     "hora": "18:30",
-                    "imagen": "https://m.media-amazon.com/images/M/MV5BMTc5MDE2ODcwNV5BMl5BanBnXkFtZTgwMzI2NzQ2NzM@._V1_.jpg",
+                    "imagen": "",
                     "precio": "42"
                 },
                 {
                     "categoria": "Acción",
-                    "titulo": "John Wick",
-                    "director": "Chad Stahelski",
-                    "anio": "2014",
+                    "titulo": "Mad Max: Fury Road",
+                    "director": "George Miller",
+                    "anio": "2015",
                     "fecha": "2023-06-06",
                     "hora": "20:00",
-                    "imagen": "https://m.media-amazon.com/images/I/71+k2-r7vQL._AC_UF1000,1000_QL80_.jpg",
+                    "imagen": "",
                     "precio": "45"
                 },
                 {
                     "categoria": "Acción",
-                    "titulo": "Misión Imposible: Fallout",
+                    "titulo": "Mission: Impossible - Rogue Nation",
                     "director": "Christopher McQuarrie",
-                    "anio": "2018",
+                    "anio": "2015",
                     "fecha": "2023-06-07",
                     "hora": "19:15",
-                    "imagen": "https://pics.filmaffinity.com/Misiaon_imposible_Fallout-180739766-mmed.jpg",
+                    "imagen": "",
                     "precio": "55"
                 }
             ]
         else:
             retorno = {'Mensaje': 'Error, método incorrecto'}
-            return jsonify(retorno)
+        return jsonify(retorno)
     except:
         retorno = {'Mensaje': 'Error, no se pudo obtener las películas'}
         return jsonify(retorno)
@@ -89,21 +89,21 @@ def getSalas():
         if request.method == 'GET':
             retorno = [
                 {
-                    "numero": "#USACIPC2_202111849_1",
-                    "asientos": "100"
+                    "numero": "#USACIPC2_202111849_4",
+                    "asientos": "50"
                 },
                 {
-                    "numero": "#USACIPC2_202111849_2",
-                    "asientos": "80"
+                    "numero": "#USACIPC2_202111849_5",
+                    "asientos": "20"
                 },
                 {
-                    "numero": "#USACIPC2_202111849_3",
-                    "asientos": "120"
+                    "numero": "#USACIPC2_202111849_6",
+                    "asientos": "70"
                 }
             ]
         else:
             retorno = {'Mensaje': 'Error, método incorrecto'}
-            return jsonify(retorno)
+        return jsonify(retorno)
     except:
         retorno = {'Mensaje': 'Error, no se pudo obtener las salas'}
         return jsonify(retorno)

@@ -1,12 +1,14 @@
+import requests
 from django.shortcuts import render
 from .utils.listaEnlazada import ListaEnlazada
 from .utils.usuarios import Usuario
 
+# Create your views here.
 def crud_usuarios(request):
     lista_usuarios = ListaEnlazada()
     lista_usuarios.CargarXML(1)
     
-    response = request.get('http://localhost:5022/usuarios')
+    response = requests.get('http://localhost:5022/usuarios')
     users_API = response.json()
     print(users_API)
     

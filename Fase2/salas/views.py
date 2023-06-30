@@ -1,10 +1,19 @@
+import requests
 from django.shortcuts import render
 from .utils.listaDoble import Lista_Doble
 from .utils.salas import Sala
 
+# Create your views here.
 def crud_salas(request):
     lista_salas = Lista_Doble()
     lista_salas.CargarXML_LD(1)
+    
+    response = requests.get('http://localhost:5022/salas')
+    rooms_API = response.json()
+    print(rooms_API)
+    
+    for room in rooms_API:
+        lista_salas.add(room)
     
     if request.method == 'POST':
         action = request.POST.get('action')

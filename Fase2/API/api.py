@@ -52,7 +52,7 @@ def getPeliculas():
                     "anio": "2015",
                     "fecha": "2023-06-05",
                     "hora": "18:30",
-                    "imagen": "",
+                    "imagen": "https://m.media-amazon.com/images/M/MV5BMTM4OGJmNWMtOTM4Ni00NTE3LTg3MDItZmQxYjc4N2JhNmUxXkEyXkFqcGdeQXVyNTgzMDMzMTg@._V1_.jpg",
                     "precio": "42"
                 },
                 {
@@ -62,7 +62,7 @@ def getPeliculas():
                     "anio": "2015",
                     "fecha": "2023-06-06",
                     "hora": "20:00",
-                    "imagen": "",
+                    "imagen": "https://m.media-amazon.com/images/M/MV5BN2EwM2I5OWMtMGQyMi00Zjg1LWJkNTctZTdjYTA4OGUwZjMyXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_FMjpg_UX1000_.jpg",
                     "precio": "45"
                 },
                 {
@@ -72,7 +72,7 @@ def getPeliculas():
                     "anio": "2015",
                     "fecha": "2023-06-07",
                     "hora": "19:15",
-                    "imagen": "",
+                    "imagen": "https://m.media-amazon.com/images/M/MV5BOTFmNDA3ZjMtN2Y0MC00NDYyLWFlY2UtNTQ4OTQxMmY1NmVjXkEyXkFqcGdeQXVyNTg4NDQ4NDY@._V1_FMjpg_UX1000_.jpg",
                     "precio": "55"
                 }
             ]

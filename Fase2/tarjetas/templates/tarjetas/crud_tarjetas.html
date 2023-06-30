@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es-419">
+    <head>
+        <meta charset="utf-8" />
+        <title>Manejo de Tarjetas</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    </head>
+    <body>
+        <header class="p-3 bg-dark text-white">
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                        <img width="100%" height="64" src="{% static 'salas/src/logo_cinemaUSAC.png' %}" alt="USAC Cinema">
+                    </a>
+                </div>
+            </div>
+        </header>
+        <div class="b-example-divider"></div>
+        <div class="px-4 py-5 my-5 text-center">
+            <h2>Salas</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Número</th>
+                        <th scope="col">Titular</th>
+                        <th scope="col">Fecha de Expiración</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index, card in cards %}
+                        <tr id="{{card.numero}}">
+                            <td>{{index}}</td>
+                            <td class="tipo">{{card.tipo}}</td>
+                            <td class="numero">{{card.numero}}</td>
+                            <td class="titular">{{card.titular}}</td>
+                            <td class="fecha_expiracion">{{card.fecha_expiracion}}</td>
+                            <td>
+                                <button type="button" class="edit-button" data-card="{{card.numero}}">Editar</button>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="numero" value="{{card.numero}}">
+                                    <input type="hidden" name="action" value="delete">
+                                    <input type="submit" value="Eliminar">
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <form id="card-form" method="post">
+                {% csrf_token %}
+                <div>Tipo de Tarjeta <input id="form-tipo" type="text" name="tipo"></div>
+                <div>Numero de Tarjeta <input id="form-numero" type="text" name="numero"></div>
+                <div>Titular de Tarjeta <input id="form-titular" type="text" name="titular"></div>
+                <div>Fecha de Expiración <input id="form-fecha_expiracion" type="text" name="fecha_expiracion"></div>
+                <div>
+                    <input type="hidden" name="action" value="add">
+                    <input id="form-submit" type="submit" value="Añadir Tarjeta">
+                </div>
+            </form>
+        </div>
+
+        <script>
+            window.addEventListener('DOMContentLoaded', (event) => {
+                let editButtons = document.querySelectorAll('.edit-button');
+                for (let i = 0; i < editButtons.length; i++) {
+                    editButtons[i].addEventListener('click', function(){
+                        let row = this.closest('tr');
+                        document.querySelector('#form-tipo').value = row.querySelector('.tipo').textContent;
+                        document.querySelector('#form-numero').value = row.querySelector('.numero').textContent;
+                        document.querySelector('#form-titular').value = row.querySelector('.titular').textContent;
+                        document.querySelector('#form-fecha_expiracion').value = row.querySelector('.fecha_expiracion').textContent;
+
+                        let actionInput = document.querySelector('#card-form input[name="action"]');
+                        let submitButton = document.querySelector('#form-submit');
+                        actionInput.value = 'modify';
+                        submitButton.value = 'Guardar Cambios';
+                    });
+                }
+
+                let form = document.querySelector('#card-form');
+                form.addEventListener("submit", function(event){
+                    event.preventDefault();
+
+                    let actionInput = document.querySelector('#card-form input[name="action"]');
+                    let submitButton = document.querySelector('#form-submit');
+                    actionInput.value = 'add';
+                    submitButton.value = 'Añadir Tarjeta';
+
+                    form.submit();
+                });
+            });
+        </script>
+    </body>
+</html>

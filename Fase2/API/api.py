@@ -108,5 +108,36 @@ def getSalas():
         retorno = {'Mensaje': 'Error, no se pudo obtener las salas'}
         return jsonify(retorno)
         
+@app.route('/tarjetas', methods=['GET'])
+def getTarjetas():
+    try:
+        if request.method == 'GET':
+            retorno = [
+                {
+                    "tipo": "Debito",
+                    "numero": "2989258770101",
+                    "titular": "Sergio Larios",
+                    "fecha_expiracion": "12/2025"
+                },
+                {
+                    "tipo": "Crédito",
+                    "numero": "01-47-87441",
+                    "titular": "McLovin Lopez",
+                    "fecha_expiracion": "06/2008"
+                },
+                {
+                    "tipo": "Débito",
+                    "numero": "4657345465325",
+                    "titular": "Joseph Joestar",
+                    "fecha_expiracion": "08/2024"
+                }
+            ]
+        else:
+            retorno = {'Mensaje': 'Error, método incorrecto'}
+        return jsonify(retorno)
+    except:
+        retorno = {'Mensaje': 'Error, no se pudo obtener las tarjetas'}
+        return jsonify(retorno)
+        
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5022)

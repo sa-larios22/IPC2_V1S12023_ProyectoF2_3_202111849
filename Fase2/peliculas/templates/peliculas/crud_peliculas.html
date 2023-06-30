@@ -77,6 +77,11 @@
             </form>
         </div>
 
+        {% for movie in movies %}
+        <div>
+            <img src="{{movie.imagen}}" alt="{{movie.titulo}}" width="100" height="position: relative">
+        </div>
+        {% endfor %}
         
         <script>
             window.addEventListener('DOMContentLoaded', (event) => {

@@ -2,10 +2,10 @@
 import time
 import xml.etree.ElementTree as ET
 from colorama import Fore as Walter
-from clases.usuarios import Usuario
-from Listas.enlazada.listaEnlazada import ListaEnlazada as LE
-from Listas.doble.listaDoble import Lista_Doble as LD
-from Listas.circular.listaCircular import listaDobleCircular as LDC
+from Fase2.usuarios.utils.usuarios import Usuario
+from Fase2.usuarios.utils.listaEnlazada import ListaEnlazada as LE
+from Fase2.salas.utils.listaDoble import Lista_Doble as LD
+from Fase2.peliculas.utils.listaCircular import listaDobleCircular as LDC
 
 peliculas_fav = []
 facturas = []

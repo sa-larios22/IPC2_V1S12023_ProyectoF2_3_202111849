@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
-from Listas.doble.nodoDoble import Nodo
-from clases.salas import Sala
+from .nodoDoble import Nodo
+from .salas import Sala
+import os
 
 class Lista_Doble:
     def __init__(self):
@@ -71,8 +72,9 @@ class Lista_Doble:
             actual.dato.imprimir()
 
     def CargarXML_LD(self, operacion):
-        
-        tree = ET.parse('Archivos de Entrada\\salas.xml')
+        script_dir = os.path.dirname(__file__)
+        xml_file_path = os.path.join(script_dir, 'salas.xml')
+        tree = ET.parse(xml_file_path)
         root = tree.getroot()
 
         for cine in root.findall('cine'):
@@ -91,8 +93,28 @@ class Lista_Doble:
                     elif operacion == 3:
                         self.delete(objeto)
 
+    def agregarXML_LD(self, numero, asientos):
+        script_dir = os.path.dirname(__file__)
+        xml_file_path = os.path.join(script_dir, 'salas.xml')
+        tree = ET.parse(xml_file_path)
+        root = tree.getroot()
+        
+        elemento_salas = root.find('cine/salas')
+        new_sala = ET.SubElement(elemento_salas, 'sala')
+        ET.SubElement(new_sala, 'numero').text = numero
+        ET.SubElement(new_sala, 'asientos').text = asientos
+        
+        self.indent_salas(root)
+        
+        try:
+            tree.write(xml_file_path)
+        except Exception as e:
+            print(e)
+
     def editarXML_LD(self, tmp_numero, new_asientos):
-        tree = ET.parse('Archivos de Entrada\\salas.xml')
+        script_dir = os.path.dirname(__file__)
+        xml_file_path = os.path.join(script_dir, 'salas.xml')
+        tree = ET.parse(xml_file_path)
         root = tree.getroot()
 
         for cine in root.findall('cine'):
@@ -102,14 +124,17 @@ class Lista_Doble:
                         asientos = sala.find('asientos')
                         asientos.text = new_asientos
                         break
+                    
+        self.eliminarXML_LD(tmp_numero)
         
-        tree.write('Archivos de Entrada\\salas.xml')
+        tree.write(xml_file_path)
 
         self.cabeza = None
-        self.CargarXML_LD(1)
 
     def eliminarXML_LD(self, tmp_numero):
-        tree = ET.parse('Archivos de Entrada\\salas.xml')
+        script_dir = os.path.dirname(__file__)
+        xml_file_path = os.path.join(script_dir, 'salas.xml')
+        tree = ET.parse(xml_file_path)
         root = tree.getroot()
 
         for cine in root.findall('cine'):
@@ -119,6 +144,19 @@ class Lista_Doble:
                         salas.remove(sala)
                         break
 
-        tree.write('Archivos de Entrada\\salas.xml')
-
-        self.CargarXML_LD(3)
+        tree.write(xml_file_path)
+        
+    def indent_salas(self, elem, level=0):
+        i = "\n" + level*"  "
+        if len(elem):
+            if not elem.text or not elem.text.strip():
+                elem.text = i + "  "
+            if not elem.tail or not elem.tail.strip():
+                elem.tail = i
+            for elem in elem:
+                self.indent_salas(elem, level+1)
+            if not elem.tail or not elem.tail.strip():
+                elem.tail = i
+        else:
+            if level and (not elem.tail or not elem.tail.strip()):
+                elem.tail = i

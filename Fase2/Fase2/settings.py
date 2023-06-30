@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'Fase2',
     'main',
     'usuarios',
-    'peliculas'
+    'peliculas',
+    'salas',
 ]
 
 MIDDLEWARE = [

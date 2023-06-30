@@ -6,6 +6,13 @@ def crud_usuarios(request):
     lista_usuarios = ListaEnlazada()
     lista_usuarios.CargarXML(1)
     
+    response = request.get('http://localhost:5022/usuarios')
+    users_API = response.json()
+    print(users_API)
+    
+    for user in users_API:
+        lista_usuarios.add(user)
+    
     if request.method == 'POST':
         action = request.POST.get('action')
         rol = request.POST.get('rol')

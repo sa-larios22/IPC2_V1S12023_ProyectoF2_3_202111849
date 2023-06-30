@@ -1,3 +1,4 @@
+import requests
 from django.shortcuts import render
 from .utils.listaCircular import listaDobleCircular
 from .utils.peliculas import Pelicula
@@ -6,6 +7,13 @@ from .utils.peliculas import Pelicula
 def crud_peliculas(request):
     lista_peliculas = listaDobleCircular()
     lista_peliculas.CargarXML_LDC(1)
+    
+    response = requests.get('http://localhost:5022/peliculas')
+    movies_API = response.json()
+    print(movies_API)
+    
+    for movie in movies_API:
+        lista_peliculas.add(movie)
     
     if request.method == 'POST':
         action = request.POST.get('action')
@@ -44,3 +52,12 @@ def crud_peliculas(request):
                 break
     
     return render(request, 'peliculas/crud_peliculas.html', {'movies': movies})
+
+def view_movies(request):
+    lista_peliculas = listaDobleCircular()
+    titulos = lista_peliculas.get_all_titulos()
+    imagenes = lista_peliculas.get_all_imagenes()
+    
+    movie_list = list(zip(titulos, imagenes))
+    
+    return render(request, 'peliculas/crud_peliculas.html', {'movie_list': movie_list})

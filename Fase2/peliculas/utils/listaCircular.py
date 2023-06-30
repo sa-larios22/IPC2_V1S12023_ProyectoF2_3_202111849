@@ -61,6 +61,40 @@ class listaDobleCircular:
             actual = actual.siguiente
         return None
 
+    def get_all_titulos(self):
+        if self.cabeza is None:
+            print("La lista esta vacía")
+            return []
+
+        result = []
+        nodo_actual = self.cabeza
+        while True:
+            pelicula = nodo_actual.dato
+            result.append(pelicula.titulo)
+            nodo_actual = nodo_actual.siguiente
+
+            if nodo_actual == self.cabeza:
+                break
+
+        return result
+
+    def get_all_imagenes(self):
+        if self.cabeza is None:
+            print("La lista esta vacía")
+            return []
+
+        result = []
+        nodo_actual = self.cabeza
+        while True:
+            pelicula = nodo_actual.dato
+            result.append(pelicula.imagen)
+            nodo_actual = nodo_actual.siguiente
+
+            if nodo_actual == self.cabeza:
+                break
+
+        return result
+
     def show_categorias(self):
         script_dir = os.path.dirname(__file__)
 

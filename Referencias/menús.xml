@@ -1,0 +1,88 @@
+<menu_principal>
+    <iniciar_sesión>
+    <nombre>Iniciar Sesión</nombre>
+        <Administrador>
+            <Gestionar_usuarios>
+            Lista enlazada simple
+                <ver> </ver>
+                <agregar> </agregar>
+                <modificar> </modificar>
+                <eliminar> </eliminar>
+            </Gestionar_usuarios>
+
+            <Gestionar_categorias_y_peliculas>
+            Lista doblemente enlazada circular
+                <ver> </ver>
+                <agregar> </agregar>
+                <modificar> </modificar>
+                <eliminar> </eliminar>
+            </Gestionar_películas>
+
+            <Gestionar_salas>
+            Lista doblemente enlazada
+                <ver> </ver>
+                <agregar> </agregar>
+                <modificar> </modificar>
+                <eliminar> </eliminar>
+            </Gestionar_salas>
+
+            <Gestionar_boletos>
+                <cancelar> </cancelar>
+            </Gestionar_boletos>
+        </Administrador>
+        <Cliente>
+            <ver_listado>
+                <ver_detalle_película> </ver_detalle_película>
+            </ver_listado>
+
+            <ver_peliculas_fav> </ver_peliculas_fav>
+            <comprar_boletos>
+                <Seleccionar_película> </Seleccionar_película>
+                <fecha> </fecha>
+                <hora> </hora>
+                <cantidad_boletos> </cantidad_boletos>
+                <numero_sala> </numero_sala>
+                <numero_asientos>
+                    Depende de la sala
+                    Validar que no se repitan
+                </numero_asientos>
+                <facturación>
+                    <nombre> </nombre>
+                    <apellido> </apellido>
+                    <nit> </nit>
+                    <direccion> </direccion>
+                    <monto> </monto>
+                </facturación>
+                <numero_boleto> #USACIPC2_Carnet_Incremental </numero_boleto>
+            </comprar_boletos>
+
+            <historial_boletos>
+                <boleto>
+                    <nombre> </nombre>
+                    <apellido> </apellido>
+                    <fecha> </fecha>
+                    <hora> </hora>
+                    <numero_boleto> </numero_boleto>
+                    <numero_asientos> </numero_asientos>
+                    <monto> </monto>
+                </boleto>
+            </historial_boletos>
+        </Cliente>
+        <Atrás> </Atrás>
+    </iniciar_sesión>
+
+    <registrarse>
+        <rol> Por defecto: Cliente </rol>
+        <nombre> </nombre>
+        <apellido> </apellido>
+        <telefono> </telefono>
+        <correo> </correo>
+        <contrasena> </contrasena>
+    </registrarse>
+
+    <ver_listado>
+        <listado_general> </listado_general>
+        <listado_por_categoría> </listado_por_categoría>
+    </ver_listado>
+
+</menu_principal>

@@ -72,25 +72,35 @@
         </div>
 
         <script>
-            $(document).ready(function(){
-                $("body").on("click", ".edit-button", function(){
-                    var correo = $(this).data('correo');
-                    var row = $("#" + correo);
-                    $("#form-rol").val(row.find(".rol").text());
-                    $("#form-nombre").val(row.find(".nombre").text());
-                    $("#form-apellido").val(row.find(".apellido").text());
-                    $("#form-telefono").val(row.find(".telefono").text());
-                    $("#form-correo").val(row.find(".correo").text());
-                    $("#form-contrasena").val(row.find(".contrasena").text());
-                    $("#form-submit").val("Guardar Cambios");
-                });
-            
-                $("#user-form").submit(function(){
-                    if ($("#form-submit").val() === "Guardar Cambios") {
-                        $(this).append('<input type="hidden" name="action" value="modify" />');
-                    } else {
-                        $(this).append('<input type="hidden" name="action" value="add" />');
-                    }
+            window.addEventListener('DOMContentLoaded', (event) => {
+                let editButtons = document.querySelectorAll('.edit-button');
+                for (let i = 0; i < editButtons.length; i++) {
+                    editButtons[i].addEventListener('click', function(){
+                        let row = this.closest('tr');
+                        document.querySelector('#form-rol').value = row.querySelector('.rol').textContent;
+                        document.querySelector('#form-nombre').value = row.querySelector('.nombre').textContent;
+                        document.querySelector('#form-apellido').value = row.querySelector('.apellido').textContent;
+                        document.querySelector('#form-telefono').value = row.querySelector('.telefono').textContent;
+                        document.querySelector('#form-correo').value = row.querySelector('.correo').textContent;
+                        document.querySelector('#form-contrasena').value = row.querySelector('.contrasena').textContent;
+
+                        let actionInput = document.querySelector('#user-form input[name="action"]');
+                        let submitButton = document.querySelector('#form-submit');
+                        actionInput.value = 'modify';
+                        submitButton.value = 'Guardar Cambios';
+                    });
+                }
+
+                let form = document.querySelector('#user-form');
+                form.addEventListener('submit', function(event){
+                    event.preventDefault();
+
+                    let actionInput = document.querySelector('#user-form input[name="action"]');
+                    let submitButton = document.querySelector('#form-submit');
+                    actionInput.value = 'add';
+                    submitButton.value = 'Añadir Usuario';
+
+                    form.submit();
                 });
             });
         </script>

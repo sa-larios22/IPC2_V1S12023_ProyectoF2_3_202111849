@@ -23,4 +23,12 @@
     <correo>luciomain@gmail.com</correo>
     <contrasena>fdsfdsfds</contrasena>
   </usuario>
+  <usuario>
+    <rol>cliente</rol>
+    <nombre>Mencho</nombre>
+    <apellido>fjkdsakj</apellido>
+    <telefono>22222</telefono>
+    <correo>kjaskj</correo>
+    <contrasena>kjsdkj</contrasena>
+  </usuario>
 </usuarios>

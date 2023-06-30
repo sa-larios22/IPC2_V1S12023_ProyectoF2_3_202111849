@@ -22,21 +22,25 @@ def crud_peliculas(request):
         
         if action == 'add':
             lista_peliculas.add(objeto)
-            lista_peliculas.editarXML_LDC(titulo, fecha, hora, precio)
+            lista_peliculas.agregarXML_LDC(categoria, titulo, director, anio, fecha, hora, imagen, precio)
         elif action == 'modify':
             index = request.POST.get('index')
-            lista_peliculas.editarXML_LDC(titulo, fecha, hora, precio)
-            lista_peliculas.CargarXML_LDC(1)
+            lista_peliculas.modify(objeto, index)
+            lista_peliculas.editarXML_LDC(objeto)
         elif action == 'delete':
+            lista_peliculas.delete(objeto)
             lista_peliculas.eliminarXML_LDC(titulo)
             
     movies = []
     current = lista_peliculas.cabeza
     index = 0
     
-    while current is not None:
-        movies.append((index, current.dato))
-        current = current.siguiente
-        index += 1
-        
+    if current is not None:
+        while True:
+            movies.append((index, current.dato))
+            current = current.siguiente
+            index += 1
+            if current == lista_peliculas.cabeza:
+                break
+    
     return render(request, 'peliculas/crud_peliculas.html', {'movies': movies})

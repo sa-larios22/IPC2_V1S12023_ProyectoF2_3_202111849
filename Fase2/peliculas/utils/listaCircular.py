@@ -143,31 +143,77 @@ class listaDobleCircular:
                     self.delete(pelicula)
                 
 
-    def editarXML_LDC(self, tmp_titulo, new_fecha, new_hora, new_precio):
+    def agregarXML_LDC(self, categoria, titulo, director, anio, fecha, hora, imagen, precio):
         script_dir = os.path.dirname(__file__)
-
-        # Build the path to the XML file by joining the script's directory with the filename
         xml_file_path = os.path.join(script_dir, 'peliculas.xml')
+        tree = ET.parse(xml_file_path)
+        root = tree.getroot()
+        
+        # Check if categoria already exists
+        categoria_element = None
+        for cat in root.findall('categoria'):
+            nombre = cat.find('nombre')
+            if nombre is not None and nombre.text == categoria:
+                categoria_element = cat
+                break
+        
+        # If the categoria doesn't exist, create it    
+        if categoria_element is None:
+            categoria_element = ET.SubElement(root, 'categoria')
+            ET.SubElement(categoria_element, 'nombre').text = categoria
+            peliculas_element = ET.SubElement(categoria_element, 'peliculas')
+        else:
+            peliculas_element = categoria_element.find('peliculas')
 
-        # Use the path to parse the XML file
+        new_movie = ET.SubElement(peliculas_element, 'pelicula')
+        
+        ET.SubElement(new_movie, 'titulo').text = titulo
+        ET.SubElement(new_movie, 'director').text = director
+        ET.SubElement(new_movie, 'anio').text = anio
+        ET.SubElement(new_movie, 'fecha').text = fecha
+        ET.SubElement(new_movie, 'hora').text = hora
+        ET.SubElement(new_movie, 'imagen').text = imagen
+        ET.SubElement(new_movie, 'precio').text = precio
+        
+        self.indent_movies(root)
+        
+        try:
+            tree.write(xml_file_path)
+        except Exception as e:
+            print(e)
+        
+
+    def editarXML_LDC(self, pelicula):
+        script_dir = os.path.dirname(__file__)
+        xml_file_path = os.path.join(script_dir, 'peliculas.xml')
         tree = ET.parse(xml_file_path)
         root = tree.getroot()
 
+        old_movie_element = None
+        old_categoria_element = None
+
+        # Search for the old movie and its category
         for category in root.findall('categoria'):
             for movie in category.find('peliculas').findall('pelicula'):
-                if movie.find('titulo').text == tmp_titulo:
-                    fecha = movie.find('fecha')
-                    fecha.text = new_fecha
-                    hora = movie.find('hora')
-                    hora.text = new_hora
-                    precio = movie.find('precio')
-                    precio.text = new_precio
+                if movie.find('titulo').text == pelicula.titulo:
+                    old_movie_element = movie
+                    old_categoria_element = category
                     break
+            if old_movie_element is not None:
+                break
         
-        tree.write(xml_file_path)
+        # If the old movie wasn't found, just return
+        if old_movie_element is None:
+            print("Movie not found")
+            return
+
+        # Use the "eliminarXML_LDC" method to remove the old movie
+        self.eliminarXML_LDC(pelicula.titulo)
+
+        # Now, call the "agregarXML_LDC" method to add the updated movie in its new category
+        self.agregarXML_LDC(pelicula.categoria, pelicula.titulo, pelicula.director, pelicula.anio, pelicula.fecha, pelicula.hora, pelicula.imagen, pelicula.precio)
 
         self.cabeza = None  # Clear the list
-        self.CargarXML_LDC(1)
 
     def eliminarXML_LDC(self, tmp_titulo):
         script_dir = os.path.dirname(__file__)
@@ -186,5 +232,18 @@ class listaDobleCircular:
                     break
 
         tree.write(xml_file_path)
-
-        self.CargarXML_LDC(1)
+        
+    def indent_movies(self, elem, level=0):
+        i = "\n" + level*"  "
+        if len(elem):
+            if not elem.text or not elem.text.strip():
+                elem.text = i + "  "
+            if not elem.tail or not elem.tail.strip():
+                elem.tail = i
+            for elem in elem:
+                self.indent_movies(elem, level+1)
+            if not elem.tail or not elem.tail.strip():
+                elem.tail = i
+        else:
+            if level and (not elem.tail or not elem.tail.strip()):
+                elem.tail = i

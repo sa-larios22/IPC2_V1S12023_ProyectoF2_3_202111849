@@ -7,6 +7,14 @@ import os
 class listaDobleCircular:
     def __init__(self):
         self.cabeza = None
+        
+    def __iter__(self):
+        node = self.cabeza
+        while True:
+            yield node
+            node = node.siguiente
+            if node == self.cabeza:
+                break
 
     def add(self, dato):
         nuevo_nodo = Nodo(dato)

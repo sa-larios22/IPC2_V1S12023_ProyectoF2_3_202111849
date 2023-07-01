@@ -1,0 +1,70 @@
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Opciones de Administrador</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    </head>
+    <body>
+        <header class="p-3 bg-dark text-white">
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <a href="http://127.0.0.1:8000" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                        <img width="100%" height="64" src="{% static 'main/src/logo_cinemaUSAC.png' %}" alt="USAC Cinema">
+                    </a>
+                </div>
+            </div>
+            <div class="b-example-divider"></div>
+        </header>
+
+        <div class="px-4 py-5 my-5 text-center">
+            <img width="300" height="120" src="{% static 'main/src/logo_cinemaUSAC.png' %}" alt="USAC Cinema">
+            <h1 class="display-5 fw-bold">Opciones de Administrador</h1>
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4">
+                    Como administrador usted tiene la capacidad de modificar, editar y eliminar los datos de los usuarios, peliculas, salas y tarjetas de credito del sistema.
+                </p>
+            </div>
+        </div>
+
+        <div class="px-4 py-5 my-5 text-center">
+            <button id="usuarios" class="btn btn-primary btn-lg">Usuarios</button>
+            <button id="peliculas" class="btn btn-primary btn-lg">Peliculas</button>
+            <button id="salas" class="btn btn-primary btn-lg">Salas</button>
+            <button id="tarjetas" class="btn btn-primary btn-lg">Tarjetas</button>
+        </div>
+
+        <div class="container">
+            <footer class="py-3 my-4 text-center text-white" style="background-color: #212529;">
+                <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                    <li class="nav-item">Sergio Andrés Larios Fajardo - </li>
+                    <li class="nav-item">202111849 - </li>
+                    <li class="nav-item">IPC2 P</li>
+                </ul>
+                <p class="text-center" style="color: #ffffff;">© 2023 USAC</p>
+            </footer>
+        </div>
+
+        <script>
+            document.getElementById("usuarios").onclick = function () {
+                location.href = "http://127.0.0.1:8000/usuarios"
+            };
+        </script>
+        <script>
+            document.getElementById("peliculas").onclick = function () {
+                location.href = "http://127.0.0.1:8000/peliculas"
+            };
+        </script>
+        <script>
+            document.getElementById("salas").onclick = function () {
+                location.href = "http://127.0.0.1:8000/salas"
+            };
+        </script>
+        <script>
+            document.getElementById("tarjetas").onclick = function () {
+                location.href = "http://127.0.0.1:8000/tarjetas"
+            };
+        </script>
+
+    </body>
+</html>

@@ -51,13 +51,16 @@ class ListaEnlazada:
 
         actual.siguiente = actual.siguiente.siguiente
 
-    def search(self, correo, contrasena):
+    def login(self, correo, contrasena):
         actual = self.cabeza
         while actual:
             if actual.dato.correo == correo and actual.dato.contrasena == contrasena:
                 return actual.dato
             actual = actual.siguiente
         return None
+
+    def clear(self):
+        self.cabeza = None
 
     def Imprimir(self):
         actual = self.cabeza

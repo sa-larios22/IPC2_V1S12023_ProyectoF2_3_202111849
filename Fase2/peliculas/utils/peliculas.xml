@@ -29,7 +29,7 @@
         <imagen>https://pics.filmaffinity.com/Misiaon_imposible_Fallout-180739766-mmed.jpg</imagen>
         <precio>55</precio>
       </pelicula>
-      </peliculas>
+    </peliculas>
   </categoria>
   <categoria>
     <nombre>Comedia</nombre>
@@ -42,6 +42,15 @@
         <hora>20:30</hora>
         <imagen>https://upload.wikimedia.org/wikipedia/en/2/23/Deadpool_%282016_poster%29.png</imagen>
         <precio>65</precio>
+      </pelicula>
+      <pelicula>
+        <titulo>Pou</titulo>
+        <director>McLovin</director>
+        <anio>2025</anio>
+        <fecha>2025-06-22</fecha>
+        <hora>00:00</hora>
+        <imagen>https://pbs.twimg.com/media/FLhwC-cXoAA7vfz.jpg</imagen>
+        <precio>1000000000</precio>
       </pelicula>
       <pelicula>
         <titulo>Superbad</titulo>

@@ -38,3 +38,6 @@ def login(request):
     
 def administrador(request):
     return render(request, 'main/administrador.html')
+
+def cliente(request):
+    return render(request, 'main/cliente.html')

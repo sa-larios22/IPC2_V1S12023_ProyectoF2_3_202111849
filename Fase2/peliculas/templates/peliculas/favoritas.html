@@ -1,0 +1,134 @@
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Opciones de Cliente</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    </head>
+    <body>
+        <header class="p-3 bg-dark text-white">
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <a href="http://127.0.0.1:8000" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                        <img width="100%" height="64" src="{% static 'main/src/logo_cinemaUSAC.png' %}" alt="USAC Cinema">
+                    </a>
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"></ul>
+                    <div class="text-end">
+                        <button id="regresar" type="button" class="btn btn-outline-light me-2">Regresar al menú</button>
+                    </div>
+                </div>
+            </div>
+            <div class="b-example-divider"></div>
+        </header>
+
+        <div class="px-4 py-5 my-5 text-center">
+            <h2>Todas las Películas</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Categoría</th>
+                        <th scope="col">Título</th>
+                        <th scope="col">Director</th>
+                        <th scope="col">Año</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Hora</th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index, movie in movies %}
+                    <tr id="{{movie.titulo}}">
+                        <td>{{index}}</td>
+                        <td class="categoria">{{movie.categoria}}</td>
+                        <td class="titulo">{{movie.titulo}}</td>
+                        <td class="director">{{movie.director}}</td>
+                        <td class="anio">{{movie.anio}}</td>
+                        <td class="fecha">{{movie.fecha}}</td>
+                        <td class="hora">{{movie.hora}}</td>
+                        <td class="imagen"><img src="{{movie.imagen}}" alt="{{movie.titulo}}" width="100" height="position: relative"></td>
+                        <td class="precio">{{movie.precio}}</td>
+                        <td>
+                            <button type="button" class="edit-button" data-movie="{{movie.titulo}}">Editar</button>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="titulo" value="{{ movie.titulo }}">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="submit" value="Eliminar">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="px-4 py-5 my-5 text-center">
+            <h2>Agregar Películas Favoritas</h2>
+            <form id="movie-form" method="post" class="form-group" style="max-width: 500px; margin: auto;">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="form-titulo" class="form-label" style="font-weight: bold; color: #000000;">Título:</label>
+                    <input id="form-titulo" type="text" name="titulo" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <input type="hidden" name="action" value="add">
+                    <input id="form-submit" type="submit" value="Añadir Película" class="btn btn-primary">
+                </div>
+            </form>
+        </div>
+
+        <div class="px-4 py-5 my-5 text-center">
+            <h2>Películas Favoritas</h2>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Categoría</th>
+                        <th scope="col">Título</th>
+                        <th scope="col">Director</th>
+                        <th scope="col">Año</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Hora</th>
+                        <th scope="col">Imagen</th>
+                        <th scope="col">Precio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for movie in favoritas %}
+                    <tr id="{{movie.titulo}}">
+                        <td>{{forloop.counter}}</td>
+                        <td class="categoria">{{movie.categoria}}</td>
+                        <td class="titulo">{{movie.titulo}}</td>
+                        <td class="director">{{movie.director}}</td>
+                        <td class="anio">{{movie.anio}}</td>
+                        <td class="fecha">{{movie.fecha}}</td>
+                        <td class="hora">{{movie.hora}}</td>
+                        <td class="imagen"><img src="{{movie.imagen}}" alt="{{movie.titulo}}" width="100" height="position: relative"></td>
+                        <td class="precio">{{movie.precio}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="container">
+            <footer class="py-3 my-4 text-center text-white" style="background-color: #212529;">
+                <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                    <li class="nav-item">Sergio Andrés Larios Fajardo - </li>
+                    <li class="nav-item">202111849 - </li>
+                    <li class="nav-item">IPC2 P</li>
+                </ul>
+                <p class="text-center" style="color: #ffffff;">© 2023 USAC</p>
+            </footer>
+        </div>
+        <script>
+            document.getElementById("regresar").onclick = function () {
+                location.href = "http://127.0.0.1:8000/cliente/"
+            };
+        </script>
+    </body>
+</html>

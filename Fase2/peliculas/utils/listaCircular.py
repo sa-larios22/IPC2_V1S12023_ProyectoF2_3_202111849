@@ -69,6 +69,9 @@ class listaDobleCircular:
             actual = actual.siguiente
         return None
 
+    def empty(self):
+        self.cabeza = None
+
     def get_all_titulos(self):
         if self.cabeza is None:
             print("La lista esta vacía")
